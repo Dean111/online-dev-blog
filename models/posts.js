@@ -42,6 +42,7 @@ Post.plugin('contentToHtml', {
 module.exports = {
   // 创建一篇文章
   create: function create(post) {
+      console.log('添加的文章是：'+post);
     return Post.create(post).exec();
   },
 

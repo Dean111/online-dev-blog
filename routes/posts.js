@@ -1,21 +1,45 @@
 var express = require('express');
 var router = express.Router();
 var PostModel = require('../models/posts');
+var UserInfo = require('../models/userInfo');
 var checkLogin = require('../middlewares/check').checkLogin;
 var CommentModel = require('../models/comments');
+var PictureModel = require('../models/picture');
+var RecmandModel = require('../models/recomendArticle');
 //GET /posts所有用户的或特定用户的文章页面
 //eg:GET /posts?author=xxx
 router.get('/', function(req, res, next) {
   var author = req.query.author;
-
-  PostModel.getPosts(author)
-    .then(function (posts) {
-      res.render('posts', {
-        posts: posts
-      });
-    })
-    .catch(next);
-});
+  Promise.all([
+      UserInfo.getUserInfos(),
+      PostModel.getPosts(author),
+      PictureModel.getAllPicture(),
+      RecmandModel.getAllArticle()
+    ]).then(function (result) {
+        var info = result[0][0];
+        var posts = result[1];
+        var picture = result[2][0];
+        var recomends = result[3];
+        if (!posts) {
+          throw new Error('该文章不存在');
+        }
+        if (!info) {
+            throw new Error('名片信息不存在');
+        }
+        if (!picture) {
+            throw new Error('图片信息不存在');
+        }
+        if (!recomends) {
+            throw new Error('推荐文章不存在');
+        }
+        res.render('posts', {
+          posts: posts,
+          info: info,
+          picture:picture,
+          recomends:recomends
+        });
+      }).catch(next);
+    });
 //发表一篇文章
 // GET /posts/create 发表文章页
 router.get('/create', checkLogin, function(req, res, next) {
@@ -62,23 +86,29 @@ router.post('/', checkLogin, function(req, res, next) {
 
 // GET /posts/:postId 单独一篇的文章页
 router.get('/:postId', function(req, res, next) {
+    console.log('进入单页页面查看界面');
   var postId = req.params.postId;
-
   Promise.all([
     PostModel.getPostById(postId),// 获取文章信息
     CommentModel.getComments(postId),// 获取该文章所有留言
-    PostModel.incPv(postId)// pv 加 1
+    PostModel.incPv(postId),// pv 加 1
+    RecmandModel.getAllArticle()
   ])
   .then(function (result) {
     var post = result[0];
     var comments = result[1];
+    var recomends = result[3];
     if (!post) {
       throw new Error('该文章不存在');
     }
+    if (!recomends) {
+        throw new Error('推荐内容链接不存在');
+    }
 
-    res.render('post', {
+    res.render('post_new', {
       post: post,
-      comments: comments
+      comments: comments,
+      recomends:recomends
     });
   })
   .catch(next);
@@ -108,7 +138,6 @@ router.post('/:postId/edit', checkLogin, function(req, res, next) {
   var author = req.session.user._id;
   var title = req.fields.title;
   var content = req.fields.content;
-
   PostModel.updatePostById(postId, author, { title: title, content: content })
     .then(function () {
       req.flash('success', '编辑文章成功');

@@ -1,0 +1,54 @@
+<%- include('admin/header') %>
+<div id="page-wrapper">
+    <div class="header">
+        <h1 class="page-header">
+            添加文章 <small>Create a new article.</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Empty</a></li>
+            <li class="active">Data</li>
+        </ol>
+        <% if (success) { %>
+          <div class="ui success message">
+            <div class="alert alert-success" role="alert"><%= success %></div>
+          </div>
+        <% } %>
+
+        <% if (error) { %>
+          <div class="ui error message">
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+          </div>
+        <% } %>
+    </div>
+    <form method="post" id="form1" action="/admin/addInfo">
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="articleTitle" id="articleTitle" class="form-control" placeholder="文章标题......">
+        </div>
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="picLink" id="articleTitle" class="form-control" placeholder="列表图标链接......">
+        </div>
+
+              <input type="hidden" name="articleContent" id="articleContent" class="form-control" />
+        <div class="form-group">
+            <div id="div1" style="height:500px;">
+
+            </div>
+        </div>
+        <div style="margin-left:28px;">
+          <button id="fabu" class="btn btn-default btn-lg">发布</button>
+        </div>
+        <div style="margin-left:10px;">
+          <button type="reset" class="btn btn-default btn-lg">重置</button>
+        </div>
+    </form>
+    <div id="page-inner">
+        <footer>
+            <p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+        </footer>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. PAGE WRAPPER  -->
+
+<%- include('admin/footer') %>

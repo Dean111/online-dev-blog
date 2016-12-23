@@ -1,0 +1,43 @@
+<aside>
+  <div class="tuijian">
+    <h2>推荐文章</h2>
+    <ol>
+      <% recomends.forEach(function (recomend,index) { %>
+        <li><span><strong><%= index+1 %></strong></span><a href="<%= recomend.link %>"><%= recomend.title %></a></li>
+      <% }) %>
+    </ol>
+  </div>
+  <div class="toppic">
+    <h2>图文并茂</h2>
+    <ul>
+      <li><a href="/"><img src="/img/k01.jpg">腐女不可怕，就怕腐女会画画！
+        <p>伤不起</p>
+        </a></li>
+      <li><a href="/"><img src="/img/k02.jpg">问前任，你还爱我吗？无限戳中泪点~
+        <p>感兴趣</p>
+        </a></li>
+      <li><a href="/"><img src="/img/k03.jpg">世上所谓幸福，就是一个笨蛋遇到一个傻瓜。
+        <p>喜欢</p>
+        </a></li>
+    </ul>
+  </div>
+  <div class="search">
+    <form class="searchform" method="get" action="#">
+      <input type="text" name="s" value="Search" onfocus="this.value=''" onblur="this.value='Search'">
+    </form>
+  </div>
+  <div class="viny">
+    <dl>
+      <dt class="art"><img src="/img/artwork.png" alt="专辑"></dt>
+      <dd class="icon-song"><span></span>回忆那么伤</dd>
+      <dd class="icon-artist"><span></span>歌手：孙子涵</dd>
+      <dd class="icon-album"><span></span>专辑：《花间提壶方大厨》</dd>
+      <dd class="icon-like"><span></span><a href="/">喜欢</a></dd>
+      <dd class="music">
+        <audio src="/audio/hy.mp3" controls></audio>
+      </dd>
+      <!--也可以添加loop属性 音频加载到末尾时，会重新播放-->
+    </dl>
+  </div>
+</aside>
+</div>

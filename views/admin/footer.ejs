@@ -1,0 +1,28 @@
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-1.10.2.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.metisMenu.js"></script>
+<script src="/js/easypiechart.js"></script>
+<script src="/js/easypiechart-data.js"></script>
+<!-- DATA TABLE SCRIPTS -->
+<script src="/js/dataTables/jquery.dataTables.js"></script>
+<script src="/js/dataTables/dataTables.bootstrap.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.metisMenu.js"></script>
+<script type="text/javascript" src="/js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var editor = new wangEditor('div1');
+        editor.create();
+        editor.$txt.html('<p>文章内容......</p>');
+          $("#fabu").click(function(){debugger
+            var text = editor.$txt.html();
+            console.log('log is log'+text)
+            $("#articleContent").val(text);
+            $("#form1").submit();
+          })
+    });
+</script>
+</body>
+</html>

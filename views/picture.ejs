@@ -1,0 +1,47 @@
+<%- include('admin/header') %>
+<div id="page-wrapper">
+    <div class="header">
+        <h1 class="page-header">
+            网站图片管理 <small>.</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Empty</a></li>
+            <li class="active">Data</li>
+        </ol>
+        <% if (success) { %>
+          <div class="ui success message">
+            <p><%= success %></p>
+          </div>
+        <% } %>
+
+        <% if (error) { %>
+          <div class="ui error message">
+            <p><%= error %></p>
+          </div>
+        <% } %>
+    </div>
+    <form method="post" id="form1" action="/admin/picture">
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="title" id="articleTitle" class="form-control" placeholder="图片标题......">
+        </div>
+        <div class="form-group">
+              <input type="text" name="link" id="articleContent" style="margin:0 auto;width:95%;" class="form-control" placeholder="图片链接http://....."/>
+        </div>
+        <div style="margin-left:28px;">
+          <button id="fabu" class="btn btn-default btn-lg">发布</button>
+        </div>
+        <div style="margin-left:10px;">
+          <button type="reset" class="btn btn-default btn-lg">重置</button>
+        </div>
+    </form>
+    <div id="page-inner">
+        <footer>
+            <p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+        </footer>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. PAGE WRAPPER  -->
+
+<%- include('admin/footer') %>

@@ -1,7 +1,11 @@
 <%- include('header') %>
-
-<% posts.forEach(function (post) { %>
-  <%- include('components/post-content', { post: post }) %>
-<% }) %>
-
+  <%- include('components/nav-setting-new',{info:info}) %>
+<div class="blogs">
+  <ul class="bloglist">
+    <% posts.forEach(function (post) { %>
+      <%- include('components/notification_new', { post: post}) %>
+    <% }) %>
+  </ul>
+  <%- include('components/post-content-new') %>
+</div>
 <%- include('footer') %>

@@ -36,12 +36,8 @@ app.use(require('express-formidable')({
     keepExtensions:true//保留后准
 }));
 
-
-
-
-
 app.locals.blog = {
-    title:pkg.name,
+    title:'Dean的博客',
     description:pkg.description
 };
 
