@@ -9,7 +9,7 @@ var RecmandModel = require('../models/recomendArticle');
 var DirectoryModel = require('../models/directory');
 
 //获取的是公共的信息
-router.get('/',checkLogin,function (req,res,next) {
+router.get('/',function (req,res,next) {
     try {
         var dirName = req.query.dirName;
         if(!dirName){
@@ -53,7 +53,7 @@ router.get('/',checkLogin,function (req,res,next) {
     }).catch(next);
 })
 //获取文章的分页列表
-router.get('/articleByPager',checkLogin,function(req,res,next){
+router.get('/articleByPager',function(req,res,next){
     var id = req.query.dirName;
     var start = req.query.start;
     var limit = req.query.limit;

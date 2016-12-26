@@ -10,7 +10,7 @@ var DirectoryModel = require('../models/directory');
 var SpiderModel = require('../models/spider');
 //GET /posts所有用户的或特定用户的文章页面
 //eg:GET /posts?author=xxx
-router.get('/',checkLogin,function (req,res,next) {
+router.get('/',function (req,res,next) {
     Promise.all([
         UserInfo.getUserInfos(),
         PictureModel.getAllPicture(),
@@ -51,7 +51,7 @@ router.get('/',checkLogin,function (req,res,next) {
 });
 
 
-router.get('/pager',checkLogin, function(req, res, next) {
+router.get('/pager', function(req, res, next) {
   console.log('进入请求分页的方法');
   var obj = PostModel.getPostPagersNum();
   obj.then(function (result) {
@@ -153,7 +153,7 @@ router.post('/', checkLogin, function(req, res, next) {
 
 
 // GET /posts/:postId 单独一篇的文章页
-router.get('/:postId',checkLogin, function(req, res, next) {
+router.get('/:postId', function(req, res, next) {
   var postId = req.params.postId;
   Promise.all([
     PostModel.getPostById(postId),// 获取文章信息

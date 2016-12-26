@@ -274,21 +274,16 @@ router.get('/personInfo', checkLogin,function(req, res, next) {
             var info = info[0];
             var session = req.session;
             if (session.change!==null) {
-
-                console.log('1111111111');
                 if (session.change=="changesuccess") {
-                    console.log('44444444444444444');
                     session.change = null;
                     res.render('personInfo',{info:info,success:'修改成功'});
                 }else if (session.change=="changefail"){
-                    console.log('222222222222222');
                     session.change = null;
                     res.render('personInfo',{info:info,error:'修改失败'});
                 }else {
                     res.render('personInfo',{info:info});
                 }
             }else{
-                console.log('33333333333333');
                 res.render('personInfo',{info:info});
             }
         }).catch(next);
