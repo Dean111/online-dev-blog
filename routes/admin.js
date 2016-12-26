@@ -7,7 +7,7 @@ var DirectoryModel = require('../models/directory');
 var PictureModel = require('../models/picture');
 var RecmandModel = require('../models/recomendArticle');
 var checkLogin = require('../middlewares/check').checkLogin;
-var ccap = require('ccap');
+//var ccap = require('ccap');
 var co = require('co');
 var async = require('async');
 var moment = require('moment');
@@ -177,7 +177,7 @@ router.get('/login',checkLogin,function (req,res,next) {
 })
 
 
-router.get('/codeCreate',function (req,res,next) {
+/*router.get('/codeCreate',function (req,res,next) {
     if(req.url == '/favicon.ico')return res.end('');//Intercept request favicon.ico
     try {
         var captcha =  ccap();
@@ -188,7 +188,7 @@ router.get('/codeCreate',function (req,res,next) {
     } catch (e) {
         console.log('错误信息是:'+e.message);
     }
-})
+})*/
 
 
 
