@@ -1,0 +1,117 @@
+<%- include('header') %>
+    <div class="blogs">
+    <div class="newlist">
+    <h2>
+        <span>
+            <a href="/jstt/div/">div+css</a>
+            <a href="/jstt/bj/">心得笔记</a>
+            <a href="/jstt/asp/">ASP</a>
+            <a href="http://www.ip3q.com/">IP查询</a>
+            <a href="/news/jsex/">JS经典实例</a>
+            <a href="/jstt/html5/">html5资讯</a>
+        </span>
+        您当前的位置：<a href="/posts">首页</a>&nbsp;>&nbsp;<a href="/article?dirName=<%- currDir._id %>"><%- currDir.title %></a></h2>
+            <ul id="bloglist2">
+
+
+
+            </ul>
+        </div>
+        <!--bloglist end-->
+        <%- include('components/post-content-new',{recomends:recomends}) %>
+        <div id="pager"></div>
+    </div>
+    <!--blogs end-->
+    </div>
+    <%- include('footer') %>
+        <link href="/css/jquery.pagination.css" rel="stylesheet">
+        <script type="text/javascript" src="/js/jquery.pagination-1.2.3.js"></script>
+        <script type="text/javascript" src="/js/jsrender.min.js"></script>
+        <script type="text/javascript">
+            Date.prototype.Format = function (fmt) { //author: meizz
+                var o = {
+                    "M+": this.getMonth() + 1, //月份
+                    "d+": this.getDate(), //日
+                    "h+": this.getHours(), //小时
+                    "m+": this.getMinutes(), //分
+                    "s+": this.getSeconds(), //秒
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                    "S": this.getMilliseconds() //毫秒
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }
+        </script>
+        <script type="text/javascript">
+            $(function() {
+                var dirName = $("#dirName").val();
+                addPage1(1, {
+                    start: 0,
+                    limit: 10,
+                    dirName: dirName
+                });
+            });
+            $.views.converters("formartString", function(val) {
+                if (val == "" || val == 'undefined' || val == null) {
+                    debugger
+                    return "";
+                } else {
+                    var str = val.toString().substring(0, 100);
+                    return str;
+                }
+            });
+
+            $.views.converters("formatDate", function(val) {
+                if (val == "" || val == 'undefined' || val == null) {
+                    return "";
+                } else {
+                    console.log(typeof(val));
+                    var str = new Date(val).Format('yyyy-MM-dd')
+                    return str;
+                }
+            })
+
+            function addPage1(Nums, param) {
+                var url = "/article/articleByPager";
+                $("#pager").page({
+                    pageSize: 5,
+                    showFirstLastBtn: true,
+                    remote: {
+                        url: url, //请求地址
+                        params: param, //自定义请求参数
+                        callback: function(result) {
+                            //result 为 请求返回的数据，呈现数据
+                            for (var variable in result) {
+                              console.log(variable+':'+result[variable]);
+                            }
+                            var data = result.result;
+                            //使用模板绑定数据
+                            $("#bloglist2").empty().append($("#page_tmp2").render(data));
+                        }
+                    }
+                });
+            }
+        </script>
+        <script type="text/x-jsrender" id="page_tmp2">
+        <div>
+            <div class="line"></div>
+            <p class="ptit">
+                <b>
+                   <a href="/posts/{{:_id}}" target="_blank" title="{{:title}}">
+                       {{:title}}
+                   </a>
+                </b>
+            </p>
+            <p class="ptime">发布时间：{{formatDate:createTime}} 作者：admin 分类：{{:dir.title}} </p>
+            <a href="/posts/{{:_id}}" target="_blank" title="{{:title}}">
+                <img src="{{:picLink}}" class="imgdow" alt="{{:title}}">
+            </a>
+            <p class="pcon">
+                {{formartString:content}}
+                    <a href="/posts/{{:_id}}" target="_blank" title="{{:title}}">详细信息</a>
+            </P>
+            <div class="line"></div>
+        </div>
+        </script>

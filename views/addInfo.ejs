@@ -21,25 +21,31 @@
           </div>
         <% } %>
     </div>
-    <form method="post" id="form1" action="/admin/addInfo">
+    <form method="post" id="form1">
         <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
-              <input type="text" name="articleTitle" id="articleTitle" class="form-control" placeholder="文章标题......">
+              <input type="text" name="articleTitle" value="<% if(typeof post!=='undefined'){ %><%- post.title %><% } %>" id="articleTitle" class="form-control" placeholder="文章标题......">
         </div>
         <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
-              <input type="text" name="picLink" id="articleTitle" class="form-control" placeholder="列表图标链接......">
+          <select name="dirId" class="form-control">
+                  <% dirs.forEach(function(item){  %>
+                    <option value="<%- item._id %>"><%- item.title %></option>
+                  <% }) %>
+          </select>
         </div>
-
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="picLink" value="<% if(typeof post!=='undefined'){ %><%- post.picLink %><% } %>" id="articleTitle" class="form-control" placeholder="列表图标链接......">
+        </div>
+              <input type="hidden" name="contentId" id="articleId" value="<% if(typeof post!=='undefined'){ %><%- post._id %><% } %>" class="form-control" />
               <input type="hidden" name="articleContent" id="articleContent" class="form-control" />
         <div class="form-group">
             <div id="div1" style="height:500px;">
-
+                <% if(typeof post!=='undefined'){ %><%- post.content %><% } %>
             </div>
         </div>
         <div style="margin-left:28px;">
           <button id="fabu" class="btn btn-default btn-lg">发布</button>
-        </div>
-        <div style="margin-left:10px;">
           <button type="reset" class="btn btn-default btn-lg">重置</button>
+          <button id="xiugai" class="btn btn-default btn-lg">修改</button>
         </div>
     </form>
     <div id="page-inner">
@@ -50,5 +56,28 @@
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. PAGE WRAPPER  -->
+<script type="text/javascript" src="/js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var editor = new wangEditor('div1');
+        editor.create();
+        //editor.$txt.html('<p>文章内容......</p>');
+          $("#fabu").click(function(){debugger
+            var text = editor.$txt.html();
+            console.log('log is log'+text)
+            $("#articleContent").val(text);
+            $("form")[0].setAttribute('action',"/admin/addInfo");//action=
+            $("#form1").submit();
+          })
+          $("#xiugai").click(function () {debugger
+            var text = editor.$txt.html();
+            console.log('log is log'+text)
+            console.log('the id is :'+$("#articleId").val());
+            $("#articleContent").val(text);
+            $("form")[0].setAttribute('action',"/admin/updateArticle");//action=
+            $("#form1").submit();
+          })
 
+    });
+</script>
 <%- include('admin/footer') %>

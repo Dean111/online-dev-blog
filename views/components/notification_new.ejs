@@ -1,4 +1,5 @@
-  <li>
+<script type="text/x-jsrender" id="page_tmp1">
+  <li id="page_tmp">
       <div class="arrow_box">
         <div class="ti"></div>
         <!--三角形-->
@@ -12,7 +13,8 @@
         <ul class="details">
           <li class="likes"><a href="#"><%= post.pv %></a></li>
           <li class="comments"><a href="#"><%= post.commentsCount %></a></li>
-          <li class="icon-time"><a href="#">2013-8-7</a></li>
+          <li class="icon-time"><a href="#"><% dateFormat(post.createTime) %></a></li>
         </ul>
       </div>
   </li>
+</script>

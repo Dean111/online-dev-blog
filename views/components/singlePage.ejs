@@ -1,9 +1,9 @@
 <div id="mainbody">
   <div class="blogs">
     <div id="index_view">
-      <h2 class="t_nav"><a href="/">网站首页</a><a href="/">慢生活</a></h2>
+      <h2 class="t_nav"><a href="/">网站首页</a><a href="/"><%-currDir.dir.title  %></a></h2>
       <h1 class="c_titile"><%- post.title %></h1>
-      <p class="box">发布时间：2013-07-25<span>编辑：admin</span>阅读（<%- post.pv %>）</p>
+      <p class="box">发布时间：<%- post.createTime %><span>编辑：admin</span>阅读（<%- post.pv %>）</p>
       <ul>
           <%- post.content %>
       </ul>
@@ -20,11 +20,43 @@
       <div class="otherlink">
         <h2>相关文章</h2>
         <ul>
-          <li><a href="/newstalk/mood/2013-07-24/518.html" title="我希望我的爱情是这样的">我希望我的爱情是这样的有种情谊，不是爱情，也算不得友情有种情谊，不是爱情，也算不得友情</a></li>
-          <li><a href="/newstalk/mood/2013-07-02/335.html" title="有种情谊，不是爱情，也算不得友情">有种情谊，不是爱情，也算不得友情有种情谊，不是爱情，也算不得友情有种情谊，不是爱情，也算不得友情</a></li>
-          <li><a href="/newstalk/mood/2013-07-01/329.html" title="世上最美好的爱情">世上最美好的爱情</a></li>
-          <li><a href="/news/read/2013-06-11/213.html" title="爱情没有永远，地老天荒也走不完">爱情没有永远，地老天荒也走不完</a></li>
-          <li><a href="/news/s/2013-06-06/24.html" title="爱情的背叛者">爱情的背叛者</a></li>
+          <% fivePosts.forEach(function(post){ %>
+            <li><a href="/posts/<%- post._id %>" title="<%- post.title %>"><%- post.title %></a></li>
+          <% }) %>
         </ul>
       </div>
+      <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="<%- post._id %>" data-title="<%- post.content %>" data-url="http://www.wenpy.cn"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wenpy"};
+    	(function() {
+    		var ds = document.createElement('script');
+    		ds.type = 'text/javascript';ds.async = true;
+    		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    		ds.charset = 'UTF-8';
+    		(document.getElementsByTagName('head')[0]
+    		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+    	})();
+    	</script>
+      <script type="text/javascript">
+          Date.prototype.Format = function (fmt) { //author: meizz
+              var o = {
+                  "M+": this.getMonth() + 1, //月份
+                  "d+": this.getDate(), //日
+                  "h+": this.getHours(), //小时
+                  "m+": this.getMinutes(), //分
+                  "s+": this.getSeconds(), //秒
+                  "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                  "S": this.getMilliseconds() //毫秒
+              };
+              if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+              for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+              return fmt;
+          }
+      </script>
+
+    <!-- 多说公共JS代码 end -->
     </div>

@@ -1,18 +1,18 @@
 <header>
   <nav id="nav">
     <ul>
-      <li><a href="/" >网站首页</a></li>
-      <li><a href="/book/" target="_blank" title="图书推荐">图书推荐</a></li>
+      <% dirss.forEach(function(dir){ %>
+        <li><a href="/article?dirName=<%-dir._id%>" ><%- dir.title  %></a></li>
+      <% }) %>
+      <% if(!!dirName){ %>
+        <input type="hidden" id="dirName" value="<%- dirName %>">
+      <%}%>
+<!-- <li><a href="/book/" target="_blank" title="图书推荐">图书推荐</a></li>
       <li><a href="/jstt/" target="_blank" title="技术探讨">技术探讨</a></li>
       <li><a href="/news/s/" target="_blank" title="慢生活">英语慢读</a></li>
       <li><a href="/news/s/" target="_blank" title="慢生活">慢生活</a></li>
       <li><a href="/newstalk/" target="_blank" title="碎言碎语">碎言碎语</a></li>
-    </ul>
-    <% if (user) { %>
-      <div style="position:absolute;right:5px;text-align:center;top:20px;line-height:60px;"><a href="/signout>管理员登录</a></div>
-    <% } else { %>
-        <div style="position:absolute;right:5px;text-align:center;top:20px;line-height:60px;"><a href="/signin">管理员登录</a></div>
-    <% } %>
+    </ul> -->
     <script src="../public/js/silder.js"></script><!--获取当前页导航 高亮显示标题-->
   </nav>
 </header>

@@ -1,0 +1,59 @@
+<%- include('admin/header') %>
+<div id="page-wrapper">
+    <div class="header">
+        <h1 class="page-header">
+            添加文章目录 <small>Create a new directory.</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Empty</a></li>
+            <li class="active">Data</li>
+        </ol>
+        <% if (success) { %>
+          <div class="ui success message">
+            <div class="alert alert-success" role="alert"><%= success %></div>
+          </div>
+        <% } %>
+        <% if (error) { %>
+          <div class="ui error message">
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+          </div>
+        <% } %>
+    </div>
+    <form method="post" id="form1">
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="dirTitle" value="<% if(typeof directory!=='undefined'){ %><%- directory.title %><% } %>" id="articleTitle" class="form-control" placeholder="请输入目录名称....">
+        </div>
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="hrefVal" value="<% if(typeof directory!=='undefined'){ %><%- directory.href %><% } %>" id="articleTitle" class="form-control" placeholder="请输入目录在站内的链接地址...">
+        </div>
+        <div style="width: 95%;height: 30px;margin: 20px auto;text-align: center;" class="input-group input-group-lg">
+              <input type="text" name="dirMark" value="<% if(typeof directory!=='undefined'){ %><%- directory.picLink %><% } %>" id="articleMark" class="form-control" placeholder="请输入目录备注....">
+        </div>
+        <div style="margin-left:28px;">
+          <button id="" class="btn btn-default btn-lg">添加</button>
+          <button type="reset" class="btn btn-default btn-lg">重置</button>
+          <button id="xiugai" class="btn btn-default btn-lg">修改</button>
+        </div>
+    </form>
+    <div id="page-inner">
+        <footer>
+            <p>Copyright &copy; 2016.Company name All rights reserved.</p>
+        </footer>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+          $("#adddir").click(function(){
+            $("form")[0].setAttribute('action',"/directory");
+              $("#form1").submit();
+          })
+          $("#modified").click(function () {
+            var text = editor.$txt.html();
+            $("#articleContent").val(text);
+            $("form")[0].setAttribute('action',"/admin/updateArticle");
+            $("#form1").submit();
+          })
+    });
+</script>
+<%- include('admin/footer') %>

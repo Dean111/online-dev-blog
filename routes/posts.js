@@ -6,20 +6,87 @@ var checkLogin = require('../middlewares/check').checkLogin;
 var CommentModel = require('../models/comments');
 var PictureModel = require('../models/picture');
 var RecmandModel = require('../models/recomendArticle');
+var DirectoryModel = require('../models/directory');
+var SpiderModel = require('../models/spider');
 //GET /posts所有用户的或特定用户的文章页面
 //eg:GET /posts?author=xxx
-router.get('/', function(req, res, next) {
-  var author = req.query.author;
+router.get('/',checkLogin,function (req,res,next) {
+    Promise.all([
+        UserInfo.getUserInfos(),
+        PictureModel.getAllPicture(),
+        RecmandModel.getAllArticle(),
+        PostModel.getPostPagersNum(),
+        PostModel.getAllPosts(),
+        DirectoryModel.getAllDirectory(),
+        SpiderModel.getAllspiders()
+      ]).then(function (result) {
+          var info = result[0][0];
+          var picture = result[1][0];
+          var recomends = result[2];
+          var totalCounts = result[3];
+          var directories = result[5];
+          var spiders = result[6];
+          console.log('spider:'+spiders);
+          if (!info) {
+              throw new Error('名片信息不存在');
+          }
+          if (!picture) {
+              throw new Error('图片信息不存在');
+          }
+          if (!recomends) {
+              throw new Error('推荐文章不存在');
+          }
+      res.render('posts', {
+            //posts: posts,
+            info: info,
+            picture:picture,
+            recomends:recomends,
+            dirss:directories,
+            dirName:'',
+            spiders:spiders
+        });
+        //res.end({success:true,totalCounts:totalCounts,result:posts});
+        }).catch(next);
+
+});
+
+
+router.get('/pager',checkLogin, function(req, res, next) {
+  console.log('进入请求分页的方法');
+  var obj = PostModel.getPostPagersNum();
+  obj.then(function (result) {
+    console.log('当前的条数是:'+result);
+  });
+  var start = req.query.start||0;
+  var limit = req.query.limit||10;
+  console.log('start:'+start);
+  console.log('limit:'+limit);
+  try {
+    if (!start) {
+        throw new Error('分页start必传');
+    }
+    if (!limit) {
+        throw new Error('分页limit必传');
+    }
+  } catch (e) {
+      req.flash('error',e.message);
+      res.redirect('/posts');
+  }
   Promise.all([
       UserInfo.getUserInfos(),
-      PostModel.getPosts(author),
+      PostModel.getAllPosts(),
       PictureModel.getAllPicture(),
-      RecmandModel.getAllArticle()
+      RecmandModel.getAllArticle(),
+      PostModel.getPostPagersNum(),
+      PostModel.getAllPosts(),
+      PostModel.pagerPost(start,limit)
     ]).then(function (result) {
         var info = result[0][0];
         var posts = result[1];
         var picture = result[2][0];
         var recomends = result[3];
+        var totalCounts = result[4];
+        var pagerPosts = result[6];
         if (!posts) {
           throw new Error('该文章不存在');
         }
@@ -32,12 +99,13 @@ router.get('/', function(req, res, next) {
         if (!recomends) {
             throw new Error('推荐文章不存在');
         }
-        res.render('posts', {
-          posts: posts,
-          info: info,
-          picture:picture,
-          recomends:recomends
-        });
+        /*res.render('posts', {
+              posts: posts,
+              info: info,
+              picture:picture,
+              recomends:recomends
+          });*/
+        res.json({"success":true,"totalCounts":totalCounts,"result":pagerPosts});
       }).catch(next);
     });
 //发表一篇文章
@@ -85,19 +153,24 @@ router.post('/', checkLogin, function(req, res, next) {
 
 
 // GET /posts/:postId 单独一篇的文章页
-router.get('/:postId', function(req, res, next) {
-    console.log('进入单页页面查看界面');
+router.get('/:postId',checkLogin, function(req, res, next) {
   var postId = req.params.postId;
   Promise.all([
     PostModel.getPostById(postId),// 获取文章信息
     CommentModel.getComments(postId),// 获取该文章所有留言
     PostModel.incPv(postId),// pv 加 1
-    RecmandModel.getAllArticle()
+    RecmandModel.getAllArticle(),
+    DirectoryModel.getAllDirectory(),
+    PostModel.getPostById(postId),
+    PostModel.getFivePosts(),
   ])
   .then(function (result) {
     var post = result[0];
     var comments = result[1];
     var recomends = result[3];
+    var dirss = result[4];
+    var currDir = result[5];
+    var fivePosts = result[6];
     if (!post) {
       throw new Error('该文章不存在');
     }
@@ -108,13 +181,17 @@ router.get('/:postId', function(req, res, next) {
     res.render('post_new', {
       post: post,
       comments: comments,
-      recomends:recomends
+      recomends:recomends,
+      dirss:dirss,
+      dirName:'',
+      currDir:currDir,
+      fivePosts:fivePosts
     });
   })
   .catch(next);
 });
 // GET /posts/:postId/edit 更新文章页
-router.get('/:postId/edit', checkLogin, function(req, res, next) {
+router.get('/:postId/edit',checkLogin, function(req, res, next) {
   var postId = req.params.postId;
   var author = req.session.user._id;
 

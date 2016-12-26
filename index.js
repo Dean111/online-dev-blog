@@ -9,12 +9,24 @@ var pkg = require('./package');
 var winston = require('winston');
 var expressWinston = require('express-winston');
 var app = express();
+var utils = require('./lib/util');
+var spiderMan =  require('./lib/util').spiderMan;
+
 
 //设置模板目录
 app.set('views',path.join(__dirname,'views'));
 
 //设置模板引擎为ejs
 app.set('view engine','ejs');
+
+//开始进行爬虫任务
+var CronJob = require('cron').CronJob;
+//每天的半夜00:30开始进行查询
+var job = new CronJob('00 30 00 * * 1-5',function(){
+    spiderMan('http://cnodejs.org/?tab=good');
+});
+job.start();
+
 //设置静态文件目录
 app.use(express.static(path.join(__dirname,'public')));
 
@@ -22,6 +34,8 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(session({
     name:config.session.key,//设置cookie中保存session id的字段名称
     secret:config.session.secrect,// 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
+    resave: false,
+    saveUninitialized: true,
     cookie:{
         maxAge:config.session.maxAge//设置过期时间 过期后sessionid自动删除
     },
@@ -40,7 +54,7 @@ app.locals.blog = {
     title:'Dean的博客',
     description:pkg.description
 };
-
+app.locals.dateFormat = utils.dateFormat;
 app.use(function(req,res,next){
     res.locals.user = req.session.user;
     res.locals.success = req.flash('success').toString();

@@ -5,15 +5,14 @@ var UserModel = require('../models/users');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
 
 //get /signin 登录页
-router.get('/',checkNotLogin,function(req,res,next){
+router.get('/',function(req,res,next){
     //res.send(req.flash());
-    res.render('signin');
+    res.render('admin_login');
 })
 //post用户登录
 router.post('/',checkNotLogin,function (req,res,next) {
     var name = req.fields.name;
     var password = req.fields.password;
-
     UserModel.getUserByName(name)
         .then(function (user) {
             if (!user) {
@@ -31,7 +30,7 @@ router.post('/',checkNotLogin,function (req,res,next) {
             delete user.password;
             req.session.user = user;
             //跳转到主页
-            res.redirect('/posts');
+            res.redirect('/admin');
         })
         .catch(next);
     //res.send(req.flash())

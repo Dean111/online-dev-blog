@@ -66,7 +66,7 @@
                 <!-- /.dropdown-messages -->
             </li>
             <!-- /.dropdown -->
-            <li class="dropdown">
+            <li  class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
@@ -205,8 +205,8 @@
                 <!-- /.dropdown-alerts -->
             </li>
             <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+            <li id="userInfo" class="dropdown">
+                <a id="userInfoNext" class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
@@ -215,7 +215,7 @@
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li><a href="/signout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -223,3 +223,17 @@
             <!-- /.dropdown -->
         </ul>
     </nav>
+<script type="text/javascript">
+    /*$('#userInfo').click(function () {
+      console.log('进入点击方法');
+        if ($('#userInfo').attr('class').indexOf('open')==-1) {
+          console.log('进入第一个方法');
+          $('#userInfo').addClass('open');
+          document.getElementById('userInfoNext').setAttribute("aria-expanded","true");
+        }else {
+          console.log('进入第二个判断');
+          $('#userInfo').removeClass('open');
+          document.getElementById('userInfoNext').setAttribute("aria-expanded","false");
+        }
+    })*/
+</script>

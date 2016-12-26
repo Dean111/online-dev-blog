@@ -44,7 +44,7 @@ header nav ul li a:hover, #nav_current { color: #fff; background: rgba(20, 20, 2
 /* --------------------博客列表-------------------- */
 .blogs { width: 1000px; margin: 0 auto 20px; }
 .bloglist { width: 666px; float: left; }
-.bloglist>li { border-right: #111 2px solid; padding: 20px 0; }
+.bloglist>ul>li { border-right: #111 2px solid; padding: 20px 0; }
 .arrow_box { background: #222; box-shadow: 0px 1px 0px rgba(255,255,255,.1), inset 0px 1px 1px rgba(0,0,0,.7); width: 630px; color: #b9b9b9; border-radius: 6px; position: relative }
 .ti { width: 0px; height: 0px; border-style: solid; border-width: 0px 0 20px 22px; border-color: transparent transparent transparent #111; position: absolute; left: 630px; top: 20px; }/* 三角形 */
 .ci { width: 10px; height: 10px; border-radius: 50%; position: absolute; left: 658px; top: 16px; background: #000; border: 2px solid #333; } /* 圆形定义边框色与背景一致 */

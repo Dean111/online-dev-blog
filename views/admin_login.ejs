@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<title>Login PHP</title>
+	<link rel="stylesheet" href="/css/_style.css" />
+	<link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript">
+  $(function() {
+      console.log('hello world');
+  })
+	</script>
+</head>
+<body>
+	<div class="lg-container">
+		<h1>Admin Area</h1>
+		<form  id="lg-form" name="lg-form" method="post">
+      <div>
+            <% if (success) { %>
+                <p><%= success %></p>
+            <% } %>
+            <% if (error) { %>
+                <p><%= error %></p>
+            <% } %>
+      </div>
+      <div>
+				<label for="username">Username:</label>
+				<input type="text" name="name" id="username" placeholder="username"/>
+			</div>
+
+			<div>
+				<label for="password">Password:</label>
+				<input type="password" name="password" id="password" placeholder="password" />
+			</div>
+
+			<div>
+				<button type="submit" style="margin-left:100px;" id="login">Login</button>
+			</div>
+		</form>
+		<div id="message"></div>
+	</div>
+</body>
+</html>
