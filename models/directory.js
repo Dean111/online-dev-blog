@@ -10,7 +10,7 @@ module.exports = {
         return Directory.update({_id: dirId }, { $set: data }).exec();
     },
     getAllDirectory:function getAllDirectory() {
-        return Directory.find().sort({_id:-1}).exec();
+        return Directory.find().sort({_id:1}).exec();
     },
     delDirectoryById:function delDirectory(dirId) {
         return Directory.remove({_id: dirId }, { $set: data }).exec()
