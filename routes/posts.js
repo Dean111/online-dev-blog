@@ -163,6 +163,7 @@ router.get('/:postId', function(req, res, next) {
     DirectoryModel.getAllDirectory(),
     PostModel.getPostById(postId),
     PostModel.getFivePosts(),
+    SpiderModel.getAllspiders()
   ])
   .then(function (result) {
     var post = result[0];
@@ -171,6 +172,7 @@ router.get('/:postId', function(req, res, next) {
     var dirss = result[4];
     var currDir = result[5];
     var fivePosts = result[6];
+    var spiders = result[7];
     if (!post) {
       throw new Error('该文章不存在');
     }
@@ -185,7 +187,8 @@ router.get('/:postId', function(req, res, next) {
       dirss:dirss,
       dirName:'',
       currDir:currDir,
-      fivePosts:fivePosts
+      fivePosts:fivePosts,
+      spiders:spiders
     });
   })
   .catch(next);
