@@ -7,7 +7,7 @@ var CommentModel = require('../models/comments');
 var PictureModel = require('../models/picture');
 var RecmandModel = require('../models/recomendArticle');
 var DirectoryModel = require('../models/directory');
-
+var SpiderModel = require('../models/spider');
 //获取的是公共的信息
 router.get('/',function (req,res,next) {
     try {
@@ -25,14 +25,15 @@ router.get('/',function (req,res,next) {
         RecmandModel.getAllArticle(),
         DirectoryModel.getAllDirectory(),
         DirectoryModel.getDirectoryById(dirName),
-        PostModel.getPostById(dirName)
+        PostModel.getPostById(dirName),
+        SpiderModel.getAllspiders()
     ]).then(function (result) {
         var info = result[0][0];
         var picture = result[1][0];
         var recomends = result[2];
         var directories = result[3];
         var currDir = result[4];
-        console.log('获取到的post是'+currDir);
+        var spiders = result[6];
         if (!info) {
             throw new Error('名片信息不存在');
         }
@@ -48,7 +49,8 @@ router.get('/',function (req,res,next) {
             recomends:recomends,
             dirss:directories,
             dirName:dirName,
-            currDir:currDir||''
+            currDir:currDir||'',
+            spiders:spiders
         })
     }).catch(next);
 })

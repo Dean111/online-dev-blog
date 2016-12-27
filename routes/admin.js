@@ -384,4 +384,34 @@ router.post('/personInfo',checkLogin,function (req,res,next) {
         .catch(next);
 })
 
+router.get('/dirList',function (req,res,next) {
+    /*DirectoryModel.getAllDirectory()
+       .then(function(result){
+           var dirList = result;
+           if (!dirList) {
+               //res.render('dirList');
+               res.json({success:'true',totalCounts:0,result:[]})
+           }else {
+               res.json({success:'true',totalCounts:0,result:dirList})
+               //res.render('dirList',{dirList:dirList});
+           }
+       })*/
+       res.render('dirList');
+})
+
+router.get('/dirPager',function (req,res,next) {
+    DirectoryModel.getAllDirectory()
+       .then(function(result){
+           var dirList = result;
+           if (!dirList) {
+               //res.render('dirList');
+               res.json({success:'true',totalCounts:0,result:[]})
+           }else {
+               res.json({success:'true',totalCounts:0,result:dirList})
+               //res.render('dirList',{dirList:dirList});
+           }
+       })
+})
+
+
 module.exports = router;

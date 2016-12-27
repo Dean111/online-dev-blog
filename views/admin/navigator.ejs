@@ -3,10 +3,10 @@
         <ul class="nav" id="main-menu">
 
             <li>
-                <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i> 管理总揽</a>
+                <a class="active-menu" href="/admin"><i class="fa fa-dashboard"></i> 管理总揽</a>
             </li>
             <li>
-                <a href="ui-elements.html"><i class="fa fa-desktop"></i> 个人信息管理</a>
+                <a href="/admin/personInfo"><i class="fa fa-desktop"></i> 个人信息管理</a>
             </li>
             <li id="article" class="ok">
                 <a href="#"><i class="fa fa-sitemap"></i> 文章管理<span class="fa arrow"></span></a>
@@ -29,49 +29,19 @@
                 <a href="ui-elements.html"><i class="fa fa-desktop"></i>网站配置管理</a>
             </li>
             <li>
-                <a href="ui-elements.html"><i class="fa fa-desktop"></i>网站图片管理</a>
+                <a href="/picture"><i class="fa fa-desktop"></i>网站图片管理</a>
             </li>
             <li>
-                <a href="/admin/recmand"><i class="fa fa-qrcode"></i>推荐文章链接管理</a>
+                <a href="/admin/recmand"><i class="fa fa-qrcode"></i>添加推荐文章链接</a>
             </li>
             <li>
-                <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
+                <a href="tab-panel.html"><i class="fa fa-qrcode"></i> 推荐文章列表管理</a>
             </li>
             <li>
-                <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+                <a href="/admin/directory"><i class="fa fa-table"></i>网站导航管理</a>
             </li>
             <li>
-                <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="#">Second Level Link</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Link</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li>
-                                <a href="#">Third Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Link</a>
-                            </li>
-
-                        </ul>
-
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="empty.html"><i class="fa fa-fw fa-file"></i>添加文章</a>
+                <a href="/admin/dirList"><i class="fa fa-fw fa-file"></i>网站导航列表管理</a>
             </li>
         </ul>
     </div>
@@ -82,7 +52,7 @@
   $(function () {
     $("#article").addClass('ok');
     $("#article").removeClass('active');
-    $("#secondMenu").slideUp();    
+    $("#secondMenu").slideUp();
   });
 </script>
 <script type="text/javascript">

@@ -1,0 +1,107 @@
+<%- include('admin/header') %>
+<div id="page-wrapper">
+    <div class="header">
+        <h1 class="page-header">Tables Page <small>Responsive tables</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Tables</a></li>
+            <li class="active">Data</li>
+        </ol>
+    </div>
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        网站导航列表管理
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th style="width:15%">导航标题</th>
+                                        <th style="width:15%">导航链接</th>
+                                        <th style="width:25%">导航备注</th>
+                                        <th style="width:30%">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bloglist4">
+                                  <!-- 列表内容插入   -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <div id="pager5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="myModalLabel">系统提示：</h4>
+                 </div>
+                 <div class="modal-body">
+                      你确定要删除该导航么?
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                     <button type="button" class="btn btn-primary">删除</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+    <footer>
+        <p>Copyright &copy; 2016.Company name All rights reserved.</p>
+    </footer>
+    <script type="text/javascript" src="/js/jquery.pagination-1.2.3.js"></script>
+    <script type="text/javascript" src="/js/jsrender.min.js"></script>
+      <script type="text/javascript">
+       	$(function () {
+    		    addPage3(1,{start:0,limit:10});
+    	  });
+        $.views.converters("formartString", function(val) {
+          if(val==""||val=='undefined'||val==null){
+            return "";
+          }else{
+            var str = val.toString().substring(0,10);
+            return str;
+          }
+        });
+     	function addPage3(Nums,param){
+    		var url="/admin/dirPager";
+      		$("#pager5").page({
+    		    pageSize: 5,
+            showFirstLastBtn:true,
+    		    remote: {
+    		        url: url,  //请求地址
+    		        params: param,       //自定义请求参数
+    		        callback: function (result) {
+    		            //result 为 请求返回的数据，呈现数据
+    		           var data=result.result;
+                    //使用模板绑定数据
+    		           var tr=$(".blogs").find('ul')[0];
+    		           $("#bloglist4").empty().append($("#page_tmp").render(data));
+    		        }
+    		    }
+    		});
+    	}
+    </script>
+    <script type="text/x-jsrender" id="page_tmp">
+    <tr class="odd gradeX">
+        <td>{{:title}}</td>
+        <td>{{:href}}</td>
+        <td>{{:mark}}</td>
+        <td class="center">
+            <a href="/addInfo?articleId={{:_id}}" class="btn btn-primary btn-sm">修改</a>
+            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">删除</button>
+            <a href="#" class="btn btn-success btn-sm">预览</a>
+        </td>
+    </tr>
+    </script>
+</div>
+<!-- 消息提示框 -->
+<%- include('admin/footer') %>
