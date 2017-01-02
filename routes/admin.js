@@ -25,18 +25,22 @@ router.get('/addInfo',checkLogin, function(req, res, next) {
                 res.render('addInfo',{dirs:result});
             });
     }else {
-        PostModel.getPostById(articleId).then(
+        Promise.all([
+            PostModel.getPostById(articleId),
+            DirectoryModel.getAllDirectory()
+        ]).then(
             function(result) {
-                if (!result) {
+                if (!result[0]) {
                     throw new Error('当前文章不存在')
                     res.render('addInfo');
                 }else {
-                    var specPost = result;
+                    var specPost = result[0];
+                    var dirs =result[1];
                     console.log('当前获取的内容是:'+result);
                     if (!update) {
-                        res.render('addInfo',{post:specPost});
+                        res.render('addInfo',{post:specPost,dirs:dirs});
                     }else {
-                        res.render('addInfo',{post:specPost,success:'文章更新成功'});
+                        res.render('addInfo',{post:specPost,dirs:dirs,success:'文章更新成功'});
                     }
                 }
             }
