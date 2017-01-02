@@ -1,5 +1,5 @@
 <%- include('header') %>
-  <%- include('components/nav-setting-new',{info:info}) %>
+<%- include('components/nav-setting-new',{info:info}) %>
 <div class="blogs">
 <div class="bloglist">
   <ul id="bloglist" >
@@ -35,8 +35,12 @@
       if(val==""||val=='undefined'||val==null){debugger
         return "";
       }else{
-        var str = val.toString().substring(100,150);
-        return str;
+        var str = val;//.toString().substring(0,10);
+      //  var reg = /^(p)(\w+)(\/p)$/;
+        var reg = /<p[^>]*>(?:(?!<\/p>)[\s\S])*<\/p>/;
+        var result = reg.exec(str);
+
+        return result.toString().substring(4, 20);
       }
     });
 
